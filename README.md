@@ -20,7 +20,7 @@ Este repositorio contiene un proyecto de ejemplo en Flutter que utiliza el paque
 
 1. Clona el repositorio:
 	```sh
-	git clone https://github.com/tu-usuario/test_flutter.git
+	git clone https://github.com/jairpuello/pokeapp.git
 	```
 2. Instala dependencias:
 	```sh
