@@ -1,49 +1,91 @@
 
-# Ejemplo Flutter con Provider
+# POKEAPP — Flutter + Provider + PokéAPI
 
-Este repositorio contiene un proyecto de ejemplo en Flutter que utiliza el paquete [Provider](https://pub.dev/packages/provider) para la gestión de estado. El objetivo es mostrar cómo estructurar una aplicación Flutter moderna usando Provider para manejar datos y actualizar la interfaz de usuario de forma reactiva.
+Aplicación Flutter que muestra una galería de Pokémon en cuadrícula (3 por fila) y permite navegar a una vista de detalle con imagen, nombre, ID, altura, peso y tipos. La app consume la PokéAPI y gestiona el estado con Provider (ChangeNotifier), separando responsabilidades en modelos, servicios, providers y páginas.
 
-## Características principales
+## ✨ Características
 
-- Uso de Provider y ChangeNotifier para la gestión de estado.
-- Ejemplo de consumo de datos (Pokémon) y actualización de la UI.
-- Arquitectura recomendada para proyectos Flutter escalables.
+- GridView responsivo con imágenes y nombres de Pokémon.
+- Vista de detalle con información ampliada: ID, altura, peso y tipos.
+- Consumo de API REST (PokéAPI) con `http`.
+- Gestión de estado con `provider` y patrón `ChangeNotifier`.
+- Navegación a detalle con `Navigator` y `MaterialPageRoute`.
+- Arquitectura modular y escalable.
 
-## Estructura del proyecto
+## 🧱 Arquitectura y flujo
 
-- `lib/main.dart`: Punto de entrada de la app, configuración de Provider.
-- `lib/providers/`: Proveedores de estado (ejemplo: `PokemonProvider`).
-- `lib/pages/`: Páginas principales de la app (ejemplo: `PokemonPage`).
-- `lib/models/` y `lib/services/`: Modelos y servicios para manejo de datos.
+- `models/`: Modelos de datos (`PokemonModels`, `PokemonDetails`).
+- `services/`: Capa de acceso a datos (`PokemonServices`) que consume la PokéAPI.
+- `providers/`: Estado de lista y de detalle (`PokemonProvider`, `PokemonDetailsProvider`).
+- `pages/`: UI (grid `PokemonPage` y detalle `PokemonDetailPage`).
 
-## ¿Cómo ejecutar este proyecto?
+Flujo simplificado:
+1) `PokemonProvider.fetchPokemons()` llama a `PokemonServices.fetchPokemons()` ➜ lista para la vista.
+2) Al tocar un item, se navega a `PokemonDetailPage` con el `id` ➜ `PokemonDetailsProvider.fetchPokemonDetails(id)` consume `PokemonServices.fetchPokemonDetails(id)`.
 
-1. Clona el repositorio:
-	```sh
-	git clone https://github.com/jairpuello/pokeapp.git
-	```
-2. Instala dependencias:
-	```sh
-	flutter pub get
-	```
-3. Ejecuta la app:
-	```sh
-	flutter run
-	```
+## 🌐 Endpoints de PokéAPI usados
 
-## Perfil del repositorio
+- Lista: `GET https://pokeapi.co/api/v2/pokemon` (usa `results[].name` y `results[].url`).
+- Detalle: `GET https://pokeapi.co/api/v2/pokemon/{id}`.
 
-**Nombre:** test_flutter
+Para imágenes de portada se construye la URL con el nombre:
+`https://img.pokemondb.net/artwork/large/{name}.jpg`.
 
-**Descripción:** Ejemplo de aplicación Flutter que utiliza Provider para la gestión de estado. Ideal para aprender buenas prácticas y arquitectura recomendada en Flutter.
+## 🗂️ Estructura del proyecto
 
-**Tecnologías:**
-- Flutter
-- Provider
+- `lib/main.dart` → MultiProvider y `MaterialApp`.
+- `lib/providers/pokemon_providers.dart` → providers de lista y detalle.
+- `lib/services/pokemon_services.dart` → peticiones HTTP con `http`.
+- `lib/models/pokemon_models.dart` → modelo de lista (extrae `id` desde la `url`).
+- `lib/models/pokemon_details.dart` → modelo de detalle (mapa de `height`, `weight`, `types`, `sprites`).
+- `lib/pages/pokemon_page.dart` → GridView (3 columnas) y navegación a detalle.
+- `lib/pages/pokemon_detail_page.dart` → vista de detalle.
 
-**Autor:** [Tu Nombre o Usuario]
+## 🛠️ Stack técnico
 
-**Licencia:** MIT
+- Flutter 3.x
+- provider ^6.x
+- http ^1.x
+- Material Design
+
+## ▶️ Cómo ejecutar (Windows PowerShell)
+
+```powershell
+git clone https://github.com/jairpuello/pokeapp.git
+cd pokeapp
+flutter pub get
+flutter run
+```
+
+> Requisitos: Flutter instalado y dispositivo/emulador en ejecución.
+
+## 🧪 Notas de implementación
+
+- El `id` del Pokémon se obtiene desde `results[i].url` dividiendo por `/` y tomando el penúltimo segmento.
+- El grid usa `SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 3/4)`.
+- En detalle, los textos usan tamaños mayores para legibilidad y los chips de tipo se centran con `Wrap`.
+
+## 🐞 Troubleshooting
+
+- `ProviderNotFoundException`: Asegúrate de registrar `PokemonProvider` y `PokemonDetailsProvider` en `MultiProvider` (en `main.dart`). Haz un Hot Restart.
+- `The argument type 'MaterialColor'...`: Usa `backgroundColor: Colors.blue` (sin `Color(Colors.blue)`).
+- Lista vacía: valida que `fetchPokemons()` parsea `results` y que el `id` se extrae desde la URL.
+- Navegación: usa `Navigator.push(context, MaterialPageRoute(builder: (_) => PokemonDetailPage(pokemonId: id)))`.
+
+## 🗺️ Roadmap
+
+- Búsqueda y filtrado por nombre/tipo.
+- Paginación / infinite scroll.
+- Caché de imágenes y datos offline.
+- Theming claro/oscuro.
+
+## 👤 Autor
+
+Jair Puello
+
+## 📄 Licencia
+
+MIT
 
 ---
-Este proyecto es ideal para quienes buscan un ejemplo claro y funcional de cómo implementar Provider en Flutter. ¡Siéntete libre de usarlo como base para tus propios proyectos!
+Proyecto de referencia para aprender consumo de APIs, Provider y arquitectura limpia en Flutter.
