@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_flutter/providers/pokemon_providers.dart';
+import 'package:test_flutter/pages/pokemon_detail_page.dart';
 
 class PokemonPage extends StatefulWidget {
   const PokemonPage({super.key});
@@ -47,27 +48,30 @@ class _PokemonPageState extends State<PokemonPage> {
               itemCount: provider.pokemons.length,
               itemBuilder: (context, index) {
                 final pokemon = provider.pokemons[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(
-                        height: 100,
-                        child: Image.network(
-                          pokemon.imageUrl,
-                          fit: BoxFit.contain,
-                        ),
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            PokemonDetailPage(pokemonId: pokemon.id),
                       ),
-                      SizedBox(height: 8.0),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          pokemon.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        pokemon.imageUrl,
+                        height: 80,
+                        width: 80,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        pokemon.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),

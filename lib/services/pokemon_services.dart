@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:test_flutter/models/pokemon_details.dart';
 import 'package:test_flutter/models/pokemon_models.dart';
 
 class PokemonServices {
@@ -17,5 +18,14 @@ class PokemonServices {
     }
   }
 
-  // Add your methods and properties here
+  Future<PokemonDetails> fetchPokemonDetails(int id) async {
+    final response = await http.get(Uri.parse('$apiUrl/$id'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return PokemonDetails.fromJson(data);
+    } else {
+      throw Exception('Failed to load Pokemon details');
+    }
+  }
 }

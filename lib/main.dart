@@ -5,7 +5,10 @@ import 'package:test_flutter/providers/pokemon_providers.dart';
 
 void main() => runApp(
   MultiProvider(
-    providers: [ChangeNotifierProvider(create: (_) => PokemonProvider())],
+    providers: [
+      ChangeNotifierProvider(create: (_) => PokemonProvider()),
+      ChangeNotifierProvider(create: (_) => PokemonDetailsProvider()),
+    ],
     child: const MyApp(),
   ),
 );
