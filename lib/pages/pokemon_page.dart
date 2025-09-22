@@ -61,11 +61,24 @@ class _PokemonPageState extends State<PokemonPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.network(
-                        pokemon.imageUrl,
-                        height: 80,
-                        width: 80,
-                        fit: BoxFit.contain,
+                      Card(
+                        elevation: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0,
+                            vertical: 20.0,
+                          ),
+                          child: Column(
+                            children: [
+                              Image.network(
+                                pokemon.imageUrl,
+                                height: 80,
+                                width: 80,
+                                fit: BoxFit.contain,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Text(
