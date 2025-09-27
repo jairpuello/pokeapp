@@ -62,6 +62,7 @@ class _PokemonPageState extends State<PokemonPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Card(
+                        color: Colors.white,
                         elevation: 4,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(

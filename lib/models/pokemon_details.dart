@@ -18,10 +18,28 @@ class PokemonDetails {
   });
 
   factory PokemonDetails.fromJson(Map<String, dynamic> json) {
+    final sprites = json['sprites'] ?? {};
+    final other = sprites['other'] ?? {};
+    final official = (other['official-artwork'] ?? {}) as Map<String, dynamic>;
+    final home = (other['home'] ?? {}) as Map<String, dynamic>;
+    final dream = (other['dream_world'] ?? {}) as Map<String, dynamic>;
+
+    String imageUrl =
+        (official['front_default'] ??
+                home['front_default'] ??
+                dream['front_default'] ??
+                sprites['front_default'] ??
+                '')
+            as String;
+
+    if (imageUrl.isEmpty && json['name'] != null) {
+      imageUrl = 'https://img.pokemondb.net/artwork/large/${json['name']}.jpg';
+    }
+
     return PokemonDetails(
       id: json['id'],
       name: json['name'],
-      imageUrl: json['sprites']['front_default'],
+      imageUrl: imageUrl,
       types: (json['types'] as List)
           .map((typeInfo) => typeInfo['type']['name'] as String)
           .toList(),
