@@ -48,6 +48,12 @@ Para imágenes de portada se construye la URL con el nombre:
 - http ^1.x
 - Material Design
 
+## 📸 Capturas de pantalla
+
+| Lista (Grid) | Detalle |
+| ------------ | ------- |
+| <img src="lib/assets/ss1.png" alt="Listado de Pokémon" width="320" /> | <img src="lib/assets/ss2.png" alt="Detalle de Pokémon" width="320" /> |
+
 ## ▶️ Cómo ejecutar (Windows PowerShell)
 
 ```powershell

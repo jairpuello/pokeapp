@@ -142,7 +142,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                           if (pokemon.abilities.isNotEmpty) ...[
                             const SizedBox(height: 28),
                             const Text(
-                              'Abilities',
+                              'Habilidades',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
