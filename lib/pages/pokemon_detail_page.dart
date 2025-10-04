@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_flutter/providers/pokemon_providers.dart';
+import 'package:test_flutter/utils/color_type.dart';
 
 class PokemonDetailPage extends StatefulWidget {
   final int pokemonId;
@@ -135,9 +136,23 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                             alignment: WrapAlignment.center,
                             spacing: 10,
                             runSpacing: 6,
-                            children: pokemon.types
-                                .map<Widget>((type) => Chip(label: Text(type)))
-                                .toList(),
+                            children: pokemon.types.map<Widget>((type) {
+                              final color = typeColor(type);
+                              return Chip(
+                                backgroundColor: color,
+                                label: Text(
+                                  type,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                              );
+                            }).toList(),
                           ),
                           if (pokemon.abilities.isNotEmpty) ...[
                             const SizedBox(height: 28),
