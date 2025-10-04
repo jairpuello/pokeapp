@@ -28,13 +28,17 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     final provider = Provider.of<PokemonDetailsProvider>(context);
     final pokemon = provider.pokemon;
 
+    final Color dynamicBg = (pokemon != null && pokemon.types.isNotEmpty)
+        ? typeColor(pokemon.types.first)
+        : Colors.white;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalle'),
         elevation: 0,
-        backgroundColor: Colors.lightBlue[50],
+        backgroundColor: dynamicBg,
       ),
-      backgroundColor: Colors.lightBlue[50],
+      backgroundColor: dynamicBg,
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : pokemon == null
