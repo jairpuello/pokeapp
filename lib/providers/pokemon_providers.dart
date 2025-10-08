@@ -28,18 +28,23 @@ class PokemonDetailsProvider extends ChangeNotifier {
   final PokemonServices _pokemonServices = PokemonServices();
   PokemonDetails? _pokemon;
   bool _isLoading = false;
+  String? _errorMessage;
 
   PokemonDetails? get pokemon => _pokemon;
   bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   Future<void> fetchPokemonDetails(int id) async {
+    _pokemon = null;
     _isLoading = true;
     notifyListeners();
     try {
       _pokemon = await _pokemonServices.fetchPokemonDetails(id);
     } catch (e) {
       _pokemon = null;
+      _errorMessage = e.toString();
     }
+
     _isLoading = false;
     notifyListeners();
   }

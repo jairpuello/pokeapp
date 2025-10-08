@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_flutter/pages/home_page.dart';
-import 'package:test_flutter/pages/pokemon_page.dart';
 import 'package:test_flutter/providers/pokemon_providers.dart';
 
 void main() => runApp(
